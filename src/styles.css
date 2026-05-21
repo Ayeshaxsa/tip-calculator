@@ -100,3 +100,8 @@ input {
   background: #111827;
   color: white;
 }
+.error {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 6px;
+}

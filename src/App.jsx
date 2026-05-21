@@ -6,35 +6,42 @@ export default function App() {
   const [customTip, setCustomTip] = useState("");
   const [people, setPeople] = useState(1);
 
+  const billValue = Number(bill);
+  const peopleValue = Number(people);
+
+  // ---------------- VALIDATION ----------------
+
+  const billError =
+    bill !== "" && billValue <= 0 ? "Bill must be greater than 0" : "";
+
+  const peopleError =
+    people !== "" && (peopleValue < 1 || !Number.isInteger(peopleValue))
+      ? "People must be a whole number ≥ 1"
+      : "";
+
+  const tipError =
+    tip < 0 || tip > 100 ? "Tip must be between 0% and 100%" : "";
+
+  const isValid = !billError && !peopleError && !tipError;
+
+  // ---------------- CALCULATIONS ----------------
+
   const tipAmount = useMemo(() => {
-    const billValue = Number(bill);
-
-    if (!billValue || billValue <= 0) {
-      return 0;
-    }
-
+    if (!isValid || !billValue) return 0;
     return (billValue * tip) / 100;
-  }, [bill, tip]);
+  }, [billValue, tip, isValid]);
 
   const grandTotal = useMemo(() => {
-    const billValue = Number(bill);
-
-    if (!billValue || billValue <= 0) {
-      return 0;
-    }
-
+    if (!isValid || !billValue) return 0;
     return billValue + tipAmount;
-  }, [bill, tipAmount]);
+  }, [billValue, tipAmount, isValid]);
 
   const perPerson = useMemo(() => {
-    const peopleValue = Number(people);
-
-    if (!peopleValue || peopleValue <= 0) {
-      return 0;
-    }
-
+    if (!isValid || peopleValue < 1) return 0;
     return grandTotal / peopleValue;
-  }, [grandTotal, people]);
+  }, [grandTotal, peopleValue, isValid]);
+
+  // ---------------- HANDLERS ----------------
 
   const handlePresetTip = (value) => {
     setTip(value);
@@ -43,12 +50,9 @@ export default function App() {
 
   const handleCustomTip = (e) => {
     const value = e.target.value;
-
     setCustomTip(value);
 
-    if (value === "") {
-      return;
-    }
+    if (value === "") return;
 
     setTip(Number(value));
   };
@@ -65,18 +69,21 @@ export default function App() {
       <section className="calculator">
         <h1>Tip Calculator</h1>
 
+        {/* BILL */}
         <div className="form-group">
-          <label htmlFor="bill">Bill Amount (₹)</label>
+          <label>Bill Amount (₹)</label>
 
           <input
-            id="bill"
             type="number"
-            placeholder="Enter bill amount"
             value={bill}
             onChange={(e) => setBill(e.target.value)}
+            placeholder="Enter bill amount"
           />
+
+          {billError && <p className="error">{billError}</p>}
         </div>
 
+        {/* TIP */}
         <div className="form-group">
           <label>Select Tip %</label>
 
@@ -94,24 +101,29 @@ export default function App() {
 
           <input
             type="number"
-            placeholder="Custom tip %"
             value={customTip}
             onChange={handleCustomTip}
+            placeholder="Custom tip %"
           />
+
+          {tipError && <p className="error">{tipError}</p>}
         </div>
 
+        {/* PEOPLE */}
         <div className="form-group">
-          <label htmlFor="people">Number of People</label>
+          <label>Number of People</label>
 
           <input
-            id="people"
             type="number"
-            placeholder="Enter number of people"
             value={people}
             onChange={(e) => setPeople(e.target.value)}
+            placeholder="Enter number of people"
           />
+
+          {peopleError && <p className="error">{peopleError}</p>}
         </div>
 
+        {/* OUTPUT */}
         <section className="summary" aria-live="polite">
           <div className="summary-row">
             <span>Total Tip</span>
