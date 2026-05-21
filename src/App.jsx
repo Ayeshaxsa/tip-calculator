@@ -124,7 +124,11 @@ export default function App() {
         </div>
 
         {/* OUTPUT */}
-        <section className="summary" aria-live="polite">
+        <section
+          className="summary"
+          aria-live="polite"
+          aria-label="Calculation results"
+        >
           <div className="summary-row">
             <span>Total Tip</span>
             <strong>₹{tipAmount.toFixed(2)}</strong>
@@ -137,11 +141,13 @@ export default function App() {
 
           <div className="summary-row">
             <span>Per Person</span>
-            <strong>₹{perPerson.toFixed(2)}</strong>
+            <strong>
+              {peopleValue < 1 || !isValid ? "—" : `₹${perPerson.toFixed(2)}`}
+            </strong>
           </div>
         </section>
 
-        <button className="reset-btn" onClick={handleReset}>
+        <button className="reset-btn" onClick={handleReset} type="button">
           Reset
         </button>
       </section>

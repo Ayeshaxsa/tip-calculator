@@ -105,3 +105,53 @@ input {
   font-size: 12px;
   margin-top: 6px;
 }
+
+@media (max-width: 480px) {
+  .calculator {
+    padding: 16px;
+    border-radius: 12px;
+  }
+
+  h1 {
+    font-size: 20px;
+  }
+
+  .tip-buttons {
+    flex-direction: column;
+  }
+
+  .tip-buttons button {
+    width: 100%;
+  }
+
+  input {
+    font-size: 16px; /* prevents iOS zoom */
+  }
+}
+@media (min-width: 900px) {
+  .calculator {
+    max-width: 480px;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+}
+
+input:focus,
+button:focus {
+  outline: 2px solid #111827;
+  outline-offset: 2px;
+}
+
+.tip-buttons button {
+  transition: all 0.2s ease;
+}
+
+.tip-buttons button:hover {
+  background: #d1d5db;
+}
+
+.tip-buttons button.active:hover {
+  background: #0f172a;
+}
