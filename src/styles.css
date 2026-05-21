@@ -96,3 +96,7 @@ input {
 .reset-btn:hover {
   background: #000;
 }
+.tip-buttons button.active {
+  background: #111827;
+  color: white;
+}
