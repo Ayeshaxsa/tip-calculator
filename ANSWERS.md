@@ -13,7 +13,7 @@ Run:
 Then open the local URL shown in the terminal.
 
 Deployed URL:
-(will add)
+[(https://tip-calculatorxx.netlify.app/)]
 
 
 ---
