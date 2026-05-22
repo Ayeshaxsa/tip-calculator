@@ -1,6 +1,6 @@
 # Tip Calculator
 
-A responsive tip calculator and bill splitter built with React and Vite as part of a frontend assessment for [Organization Name].
+A responsive tip calculator and bill splitter built with React and Vite as part of a frontend assessment.
 
 ## Run Locally
 
